@@ -45,7 +45,7 @@ tasks {
 
                 "kotlinVersion" to Dependency.Kotlin.VERSION,
                 "coroutineVersion" to Dependency.Coroutines.VERSION,
-                "serializationVersion" to Dependency.Serialization.VERSION,
+                "serializationVersion" to Dependency.Serialization.Json.VERSION,
                 "apiVersion" to Dependency.Minecraft.API_VERSION
             )
         }
