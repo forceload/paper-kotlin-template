@@ -28,6 +28,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Dependency.Serialization.Json.VERSION}")
 }
 
+@Suppress("PropertyName") val _group = group
 tasks {
     test { useJUnitPlatform() }
     withType<KotlinCompile> { kotlinOptions.jvmTarget = "17" }
@@ -40,7 +41,7 @@ tasks {
             val packageName = project.extra["package_name"] as String
 
             expand(
-                "pluginName" to pluginName, "group" to group, "version" to version,
+                "pluginName" to pluginName, "group" to _group, "version" to version,
                 "packageName" to packageName, "aliasName" to packageName.replaceFirstChar { it.uppercase() },
 
                 "kotlinVersion" to Dependency.Kotlin.VERSION,
