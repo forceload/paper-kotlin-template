@@ -1,1 +1,1 @@
-rootProject.name = "gradle-kotlin-template"
+rootProject.name = "paper-kotlin-template"
