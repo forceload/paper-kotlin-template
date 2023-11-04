@@ -13,11 +13,16 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
 }
 
+val frequentLegacies = arrayOf("1.12", "1.12.2", "1.13", "1.16", "1.16.5")
 dependencies {
     implementation(kotlin("stdlib"))
     testImplementation(kotlin("test"))
 
-    compileOnly("io.papermc.paper:paper-api:${Dependency.PaperAPI.VERSION}")
+    val apiAddress =
+        if (!frequentLegacies.contains(Dependency.Minecraft.VERSION)) "io.papermc.paper"
+        else "com.destroystokyo.paper"
+
+    compileOnly("${apiAddress}:paper-api:${Dependency.PaperAPI.VERSION}")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependency.Coroutines.VERSION}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Dependency.Serialization.Json.VERSION}")
@@ -39,7 +44,8 @@ tasks {
 
                 "kotlinVersion" to Dependency.Kotlin.VERSION,
                 "coroutineVersion" to Dependency.Coroutines.VERSION,
-                "serializationVersion" to Dependency.Serialization.VERSION
+                "serializationVersion" to Dependency.Serialization.VERSION,
+                "apiVersion" to Dependency.Minecraft.API_VERSION
             )
         }
     }
