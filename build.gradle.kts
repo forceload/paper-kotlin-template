@@ -33,13 +33,14 @@ tasks {
     withType<KotlinCompile> { kotlinOptions.jvmTarget = "17" }
 
     processResources {
+        outputs.upToDateWhen { false }
+
         filesMatching("*.yml") {
-            outputs.upToDateWhen { false }
             val pluginName = project.extra["plugin_name"] as String
             val packageName = project.extra["package_name"] as String
 
             expand(
-                "pluginName" to pluginName, "group" to group,
+                "pluginName" to pluginName, "group" to group, "version" to version,
                 "packageName" to packageName, "aliasName" to packageName.replaceFirstChar { it.uppercase() },
 
                 "kotlinVersion" to Dependency.Kotlin.VERSION,
