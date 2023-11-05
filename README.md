@@ -1,1 +1,1 @@
-# Gradle Kotlin/JVM Template
+# PaperMC Kotlin Plugin Template
