@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -22,16 +23,39 @@ dependencies {
         if (!frequentLegacies.contains(Dependency.Minecraft.VERSION)) "io.papermc.paper"
         else "com.destroystokyo.paper"
 
-    compileOnly("${apiAddress}:paper-api:${Dependency.PaperAPI.VERSION}")
+    implementation("${apiAddress}:paper-api:${Dependency.PaperAPI.VERSION}")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependency.Coroutines.VERSION}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${Dependency.Serialization.Json.VERSION}")
 }
 
+val olderVersions = arrayOf(
+    "1.17", "1.17.1",
+    "1.18", "1.18.1", "1.18.2",
+    "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4",
+    "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6"
+)
+
+val javaVersion =
+    if (olderVersions.contains(Dependency.Minecraft.VERSION)) "17"
+    else "21"
+
+java {
+    toolchain {
+        version = javaVersion
+    }
+}
+
 @Suppress("PropertyName") val _group = group
 tasks {
     test { useJUnitPlatform() }
-    withType<KotlinCompile> { kotlinOptions.jvmTarget = "17" }
+
+
+    withType<KotlinCompile> {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.valueOf("JVM_$javaVersion"))
+        }
+    }
 
     processResources {
         outputs.upToDateWhen { false }
